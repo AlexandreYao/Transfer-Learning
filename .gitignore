@@ -1,0 +1,4 @@
+# Ignore directories
+/data/
+/results/
+/src/runs/

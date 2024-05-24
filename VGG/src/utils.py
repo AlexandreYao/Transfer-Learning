@@ -72,6 +72,7 @@ def train_model(
     device,
     scheduler,
     num_epochs=25,
+    use_validation=False
 ):
     """
     Train a deep learning model with given data loaders and other training components.
@@ -123,7 +124,7 @@ def train_model(
             print("=" * 50)
             nb_samples_used = 0
             # Each epoch has a training and validation phase
-            for phase in ["train", "val"]:
+            for phase in ["train", "val"] if use_validation else ["train"]:
                 if phase == "train":
                     model.train()  # Set model to training mode
                 else:
@@ -152,7 +153,7 @@ def train_model(
                     running_corrects += torch.sum(preds == labels.data)
                     if (batch_index + 1) % nb_batches_to_display == 0 and phase == "train":
                         print(
-                            f"\tBatch [{batch_index+1}/{nb_batches}], loss: {running_loss / nb_samples_used}"
+                            f"\tBatch [{batch_index+1}/{nb_batches}], loss: {(running_loss / nb_samples_used):.4f}"
                         )
                 if phase == "train":
                     scheduler.step()
